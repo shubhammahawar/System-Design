@@ -1,0 +1,592 @@
+Enums and Constants: Here are the required enums, data types, and constants:
+
+public enum VehicleType {
+    CAR(1), TRUCK(2), ELECTRIC(3), VAN(4), MOTORBIKE(5);
+
+    private final int value;
+
+    VehicleType(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+}
+
+public enum ParkingSpotType {
+    HANDICAPPED(1), COMPACT(2), LARGE(3), MOTORBIKE(4), ELECTRIC(5);
+
+    private final int value;
+
+    ParkingSpotType(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+}
+
+public enum AccountStatus {
+    ACTIVE(1), BLOCKED(2), BANNED(3), COMPROMISED(4), ARCHIVED(5), UNKNOWN(6);
+
+    private final int value;
+
+    AccountStatus(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+}
+
+public enum ParkingTicketStatus {
+    ACTIVE(1), PAID(2), LOST(3);
+
+    private final int value;
+
+    ParkingTicketStatus(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+}
+
+public class Address {
+    private String streetAddress;
+    private String city;
+    private String state;
+    private String zipCode;
+    private String country;
+
+    public Address(String street, String city, String state, String zipCode, String country) {
+        this.streetAddress = street;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.country = country;
+    }
+}
+
+public class Person {
+    private String name;
+    private Address address;
+    private String email;
+    private String phone;
+
+    public Person(String name, Address address, String email, String phone) {
+        this.name = name;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Account, Admin, and ParkingAttendant: These classes represent various people that interact with our system:
+
+import static com.example.constants.AccountStatus;
+
+public class Account {
+    private String userName;
+    private String password;
+    private Person person;
+    private AccountStatus status;
+
+    public Account(String userName, String password, Person person, AccountStatus status) {
+        this.userName = userName;
+        this.password = password;
+        this.person = person;
+        this.status = status;
+    }
+
+    public void resetPassword() {
+        // Implementation for resetting password
+    }
+}
+
+
+
+
+public class Admin extends Account {
+    public Admin(String userName, String password, Person person, AccountStatus status) {
+        super(userName, password, person, status);
+    }
+
+    public void addParkingFloor(String floor) {
+        // Implementation for adding parking floor
+    }
+
+    public void addParkingSpot(String floorName, Spot spot) {
+        // Implementation for adding parking spot
+    }
+
+    public void addParkingDisplayBoard(String floorName, DisplayBoard displayBoard) {
+        // Implementation for adding parking display board
+    }
+
+    public void addCustomerInfoPanel(String floorName, InfoPanel infoPanel) {
+        // Implementation for adding customer info panel
+    }
+
+    public void addEntrancePanel(EntrancePanel entrancePanel) {
+        // Implementation for adding entrance panel
+    }
+
+    public void addExitPanel(ExitPanel exitPanel) {
+        // Implementation for adding exit panel
+    }
+}
+
+public class ParkingAttendant extends Account {
+    public ParkingAttendant(String userName, String password, Person person, AccountStatus status) {
+        super(userName, password, person, status);
+    }
+
+    public void processTicket(String ticketNumber) {
+        // Implementation for processing ticket
+    }
+}
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ParkingSpot: Here is the definition of ParkingSpot and all of its children classes:
+
+
+import com.example.constants.ParkingSpotType;
+
+public abstract class ParkingSpot {
+    private int number;
+    private boolean isFree;
+    private Vehicle vehicle;
+    private ParkingSpotType parkingSpotType;
+
+    public ParkingSpot(int number, ParkingSpotType parkingSpotType) {
+        this.number = number;
+        this.isFree = true;
+        this.vehicle = null;
+        this.parkingSpotType = parkingSpotType;
+    }
+
+    public boolean isFree() {
+        return isFree;
+    }
+
+    public void assignVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+        this.isFree = false;
+    }
+
+    public void removeVehicle() {
+        this.vehicle = null;
+        this.isFree = true;
+    }
+}
+
+public class HandicappedSpot extends ParkingSpot {
+    public HandicappedSpot(int number) {
+        super(number, ParkingSpotType.HANDICAPPED);
+    }
+}
+
+public class CompactSpot extends ParkingSpot {
+    public CompactSpot(int number) {
+        super(number, ParkingSpotType.COMPACT);
+    }
+}
+
+public class LargeSpot extends ParkingSpot {
+    public LargeSpot(int number) {
+        super(number, ParkingSpotType.LARGE);
+    }
+}
+
+public class MotorbikeSpot extends ParkingSpot {
+    public MotorbikeSpot(int number) {
+        super(number, ParkingSpotType.MOTORBIKE);
+    }
+}
+
+public class ElectricSpot extends ParkingSpot {
+    public ElectricSpot(int number) {
+        super(number, ParkingSpotType.ELECTRIC);
+    }
+}
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ParkingFloor: This class encapsulates a parking floor:
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class ParkingFloor {
+    private String name;
+    private Map<Integer, ParkingSpot> handicappedSpots;
+    private Map<Integer, ParkingSpot> compactSpots;
+    private Map<Integer, ParkingSpot> largeSpots;
+    private Map<Integer, ParkingSpot> motorbikeSpots;
+    private Map<Integer, ParkingSpot> electricSpots;
+    private Map<Integer, InfoPortal> infoPortals;
+    private Map<String, Integer> freeHandicappedSpotCount;
+    private Map<String, Integer> freeCompactSpotCount;
+    private Map<String, Integer> freeLargeSpotCount;
+    private Map<String, Integer> freeMotorbikeSpotCount;
+    private Map<String, Integer> freeElectricSpotCount;
+    private ParkingDisplayBoard displayBoard;
+
+    public ParkingFloor(String name) {
+        this.name = name;
+        this.handicappedSpots = new HashMap<>();
+        this.compactSpots = new HashMap<>();
+        this.largeSpots = new HashMap<>();
+        this.motorbikeSpots = new HashMap<>();
+        this.electricSpots = new HashMap<>();
+        this.infoPortals = new HashMap<>();
+        this.freeHandicappedSpotCount = new HashMap<>();
+        this.freeCompactSpotCount = new HashMap<>();
+        this.freeLargeSpotCount = new HashMap<>();
+        this.freeMotorbikeSpotCount = new HashMap<>();
+        this.freeElectricSpotCount = new HashMap<>();
+        this.displayBoard = new ParkingDisplayBoard();
+    }
+
+    public void addParkingSpot(ParkingSpot spot) {
+        switch (spot.getType()) {
+            case HANDICAPPED:
+                handicappedSpots.put(spot.getNumber(), spot);
+                break;
+            case COMPACT:
+                compactSpots.put(spot.getNumber(), spot);
+                break;
+            case LARGE:
+                largeSpots.put(spot.getNumber(), spot);
+                break;
+            case MOTORBIKE:
+                motorbikeSpots.put(spot.getNumber(), spot);
+                break;
+            case ELECTRIC:
+                electricSpots.put(spot.getNumber(), spot);
+                break;
+            default:
+                System.out.println("Wrong parking spot type");
+        }
+    }
+
+    public void assignVehicleToSpot(Vehicle vehicle, ParkingSpot spot) {
+        spot.assignVehicle(vehicle);
+        switch (spot.getType()) {
+            case HANDICAPPED:
+                updateDisplayBoardForHandicapped(spot);
+                break;
+            case COMPACT:
+                updateDisplayBoardForCompact(spot);
+                break;
+            case LARGE:
+                updateDisplayBoardForLarge(spot);
+                break;
+            case MOTORBIKE:
+                updateDisplayBoardForMotorbike(spot);
+                break;
+            case ELECTRIC:
+                updateDisplayBoardForElectric(spot);
+                break;
+            default:
+                System.out.println("Wrong parking spot type!");
+        }
+    }
+
+    private void updateDisplayBoardForHandicapped(ParkingSpot spot) {
+        if (displayBoard.getHandicappedFreeSpot().getNumber() == spot.getNumber()) {
+            for (int key : handicappedSpots.keySet()) {
+                if (handicappedSpots.get(key).isFree()) {
+                    displayBoard.setHandicappedFreeSpot(handicappedSpots.get(key));
+                }
+            }
+            displayBoard.showEmptySpotNumber();
+        }
+    }
+
+    private void updateDisplayBoardForCompact(ParkingSpot spot) {
+        if (displayBoard.getCompactFreeSpot().getNumber() == spot.getNumber()) {
+            for (int key : compactSpots.keySet()) {
+                if (compactSpots.get(key).isFree()) {
+                    displayBoard.setCompactFreeSpot(compactSpots.get(key));
+                }
+            }
+            displayBoard.showEmptySpotNumber();
+        }
+    }
+
+    public void freeSpot(ParkingSpot spot) {
+        spot.removeVehicle();
+        switch (spot.getType()) {
+            case HANDICAPPED:
+                freeHandicappedSpotCount.put("free_spot", freeHandicappedSpotCount.get("free_spot") + 1);
+                break;
+            case COMPACT:
+                freeCompactSpotCount.put("free_spot", freeCompactSpotCount.get("free_spot") + 1);
+                break;
+            case LARGE:
+                freeLargeSpotCount.put("free_spot", freeLargeSpotCount.get("free_spot") + 1);
+                break;
+            case MOTORBIKE:
+                freeMotorbikeSpotCount.put("free_spot", freeMotorbikeSpotCount.get("free_spot") + 1);
+                break;
+            case ELECTRIC:
+                freeElectricSpotCount.put("free_spot", freeElectricSpotCount.get("free_spot") + 1);
+                break;
+            default:
+                System.out.println("Wrong parking spot type!");
+        }
+    }
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ParkingDisplayBoard: This class encapsulates a parking display board:
+
+public class ParkingDisplayBoard {
+    private int id;
+    private ParkingSpot handicappedFreeSpot;
+    private ParkingSpot compactFreeSpot;
+    private ParkingSpot largeFreeSpot;
+    private ParkingSpot motorbikeFreeSpot;
+    private ParkingSpot electricFreeSpot;
+
+    public ParkingDisplayBoard(int id) {
+        this.id = id;
+    }
+
+    public void showEmptySpotNumber() {
+        StringBuilder message = new StringBuilder();
+
+        if (handicappedFreeSpot.isFree()) {
+            message.append("Free Handicapped: ").append(handicappedFreeSpot.getNumber());
+        } else {
+            message.append("Handicapped is full");
+        }
+        message.append("\n");
+
+        if (compactFreeSpot.isFree()) {
+            message.append("Free Compact: ").append(compactFreeSpot.getNumber());
+        } else {
+            message.append("Compact is full");
+        }
+        message.append("\n");
+
+        if (largeFreeSpot.isFree()) {
+            message.append("Free Large: ").append(largeFreeSpot.getNumber());
+        } else {
+            message.append("Large is full");
+        }
+        message.append("\n");
+
+        if (motorbikeFreeSpot.isFree()) {
+            message.append("Free Motorbike: ").append(motorbikeFreeSpot.getNumber());
+        } else {
+            message.append("Motorbike is full");
+        }
+        message.append("\n");
+
+        if (electricFreeSpot.isFree()) {
+            message.append("Free Electric: ").append(electricFreeSpot.getNumber());
+        } else {
+            message.append("Electric is full");
+        }
+
+        System.out.println(message.toString());
+    }
+
+    public void setHandicappedFreeSpot(ParkingSpot handicappedFreeSpot) {
+        this.handicappedFreeSpot = handicappedFreeSpot;
+    }
+
+    public void setCompactFreeSpot(ParkingSpot compactFreeSpot) {
+        this.compactFreeSpot = compactFreeSpot;
+    }
+
+    public void setLargeFreeSpot(ParkingSpot largeFreeSpot) {
+        this.largeFreeSpot = largeFreeSpot;
+    }
+
+    public void setMotorbikeFreeSpot(ParkingSpot motorbikeFreeSpot) {
+        this.motorbikeFreeSpot = motorbikeFreeSpot;
+    }
+
+    public void setElectricFreeSpot(ParkingSpot electricFreeSpot) {
+        this.electricFreeSpot = electricFreeSpot;
+    }
+}
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ParkingLot: Our system will have only one object of this class. This can be enforced by using the Singleton pattern. In software engineering, 
+the singleton pattern is a software design pattern that restricts the instantiation of a class to only one object.
+
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class ParkingLot {
+    private static ParkingLot instance = null;
+
+    private static class OnlyOne {
+        private String name;
+        private String address;
+        private ParkingRate parkingRate;
+
+        private int compactSpotCount;
+        private int largeSpotCount;
+        private int motorbikeSpotCount;
+        private int electricSpotCount;
+        private int maxCompactCount;
+        private int maxLargeCount;
+        private int maxMotorbikeCount;
+        private int maxElectricCount;
+
+        private Map<Integer, EntrancePanel> entrancePanels;
+        private Map<Integer, ExitPanel> exitPanels;
+        private Map<Integer, ParkingFloor> parkingFloors;
+        private Map<Integer, ParkingTicket> activeTickets;
+
+        private Lock lock;
+
+        public OnlyOne(String name, String address) {
+            this.name = name;
+            this.address = address;
+            this.parkingRate = new ParkingRate();
+
+            this.compactSpotCount = 0;
+            this.largeSpotCount = 0;
+            this.motorbikeSpotCount = 0;
+            this.electricSpotCount = 0;
+            this.maxCompactCount = 0;
+            this.maxLargeCount = 0;
+            this.maxMotorbikeCount = 0;
+            this.maxElectricCount = 0;
+
+            this.entrancePanels = new HashMap<>();
+            this.exitPanels = new HashMap<>();
+            this.parkingFloors = new HashMap<>();
+            this.activeTickets = new HashMap<>();
+
+            this.lock = new ReentrantLock();
+        }
+    }
+
+    private ParkingLot() {
+        // private constructor to prevent instantiation
+    }
+
+    public static ParkingLot getInstance(String name, String address) {
+        if (instance == null) {
+            instance = new ParkingLot();
+            instance.initialize(name, address);
+        } else {
+            instance.updateDetails(name, address);
+        }
+        return instance;
+    }
+
+    private void initialize(String name, String address) {
+        OnlyOne onlyOne = new OnlyOne(name, address);
+        instance = onlyOne;
+    }
+
+    private void updateDetails(String name, String address) {
+        instance.OnlyOne.name = name;
+        instance.OnlyOne.address = address;
+    }
+
+    public ParkingTicket getNewParkingTicket(Vehicle vehicle) throws Exception {
+        if (isFull(vehicle.getType())) {
+            throw new Exception("Parking full!");
+        }
+
+        instance.lock.lock();
+        ParkingTicket ticket = new ParkingTicket();
+        vehicle.assignTicket(ticket);
+        ticket.saveInDB();
+        instance.incrementSpotCount(vehicle.getType());
+        instance.activeTickets.put(ticket.getTicketNumber(), ticket);
+        instance.lock.unlock();
+        return ticket;
+    }
+
+    private boolean isFull(VehicleType type) {
+        if (type == VehicleType.Truck || type == VehicleType.Van) {
+            return instance.largeSpotCount >= instance.maxLargeCount;
+        }
+
+        if (type == VehicleType.Motorbike) {
+            return instance.motorbikeSpotCount >= instance.maxMotorbikeCount;
+        }
+
+        if (type == VehicleType.Car) {
+            return (instance.compactSpotCount + instance.largeSpotCount) >= (instance.maxCompactCount + instance.maxLargeCount);
+        }
+
+        return (instance.compactSpotCount + instance.largeSpotCount + instance.electricSpotCount) >= (instance.maxCompactCount + instance.maxLargeCount
+                                                                                                      + instance.maxElectricCount);
+    }
+
+    private void incrementSpotCount(VehicleType type) {
+        int largeSpotCount = 0;
+        int motorbikeSpotCount = 0;
+        int compactSpotCount = 0;
+        int electricSpotCount = 0;
+
+        if (type == VehicleType.Truck || type == VehicleType.Van) {
+            largeSpotCount += 1;
+        } else if (type == VehicleType.Motorbike) {
+            motorbikeSpotCount += 1;
+        } else if (type == VehicleType.Car) {
+            if (instance.compactSpotCount < instance.maxCompactCount) {
+                compactSpotCount += 1;
+            } else {
+                largeSpotCount += 1;
+            }
+        } else {  // Electric car
+            if (instance.electricSpotCount < instance.maxElectricCount) {
+                electricSpotCount += 1;
+            } else if (instance.compactSpotCount < instance.maxCompactCount) {
+                compactSpotCount += 1;
+            } else {
+                largeSpotCount += 1;
+            }
+        }
+    }
+
+    public boolean isFull() {
+        for (Integer key : instance.parkingFloors.keySet()) {
+            if (!instance.parkingFloors.get(key).isFull()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void addParkingFloor(ParkingFloor floor) {
+        // store in database
+    }
+
+    public void addEntrancePanel(EntrancePanel entrancePanel) {
+        // store in database
+    }
+
+    public void addExitPanel(ExitPanel exitPanel) {
+        // store in database
+    }
+}

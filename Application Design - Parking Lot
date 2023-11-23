@@ -1,0 +1,141 @@
+Designing an application for an automated parking lot involves various components and considerations. Below is a high-level design that covers the requested aspects:
+
+### 1. Class Diagrams:
+
+#### a. ParkingLot
+- Attributes: LotID, Capacity, CurrentOccupancy
+- Methods: CheckAvailability(), ParkVehicle(), RemoveVehicle()
+
+#### b. Vehicle
+- Attributes: VehicleID, LicensePlate, Type (car, motorcycle, etc.)
+- Methods: GetDetails()
+
+#### c. Ticket
+- Attributes: TicketID, EntryTime, ExitTime, Fee, VehicleID
+- Methods: CalculateFee()
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### 2. Schema:
+
+#### ParkingLot Table
+- LotID (Primary Key)
+- Capacity
+- CurrentOccupancy
+
+#### Vehicle Table
+- VehicleID (Primary Key)
+- LicensePlate
+- Type
+
+#### Ticket Table
+- TicketID (Primary Key)
+- EntryTime
+- ExitTime
+- Fee
+- VehicleID (Foreign Key referencing Vehicle Table)
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### 3. Application Layers:
+
+#### a. Presentation Layer
+- Handles user interaction and input.
+- Initiates requests to the Application Layer.
+
+#### b. Application Layer
+- Implements business logic.
+- Communicates with the Data Access Layer.
+
+#### c. Data Access Layer
+- Manages interactions with the database.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### 4. Endpoints:
+
+#### a. /checkAvailability
+- GET: Check the availability of parking spaces.
+
+#### b. /parkVehicle
+- POST: Park a vehicle in the parking lot.
+
+#### c. /removeVehicle
+- POST: Remove a vehicle from the parking lot.
+
+#### d. /getTicketDetails
+- GET: Retrieve details of a parking ticket.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### 5. Queries for Various Use Cases:
+
+#### a. Check Availability
+```sql
+SELECT Capacity, CurrentOccupancy FROM ParkingLot WHERE LotID = :lotID;
+```
+
+#### b. Park Vehicle
+```sql
+INSERT INTO Vehicle (LicensePlate, Type) VALUES (:licensePlate, :type);
+INSERT INTO Ticket (EntryTime, VehicleID) VALUES (CURRENT_TIMESTAMP, LAST_INSERT_ID());
+```
+
+#### c. Remove Vehicle
+```sql
+UPDATE Ticket SET ExitTime = CURRENT_TIMESTAMP WHERE VehicleID = :vehicleID AND ExitTime IS NULL;
+```
+
+#### d. Get Ticket Details
+```sql
+SELECT * FROM Ticket WHERE TicketID = :ticketID;
+```
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+### 6. Associations between Different Tables:
+
+- ParkingLot and Vehicle: One-to-Many (A parking lot can have many vehicles).
+- Vehicle and Ticket: One-to-One (Each vehicle has one corresponding ticket).
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### 7. Database:
+
+Use a relational database like MySQL or PostgreSQL for data consistency and ease of querying.
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+### 8. Cover Various Corner Cases:
+
+#### a. Full Parking Lot
+Handle scenarios where the parking lot is full, and no more vehicles can be parked.
+
+#### b. Invalid Tickets
+Implement checks to ensure that only valid tickets are used for vehicle removal.
+
+#### c. Fee Calculation
+Handle edge cases related to fee calculation, such as discounts, lost tickets, or long-duration stays.
+
+#### d. Concurrent Transactions
+Implement mechanisms to handle concurrent transactions to avoid race conditions.
+
+#### e. Security
+Ensure data security by implementing proper authentication and authorization mechanisms.
+
+#### f. Data Integrity
+Use foreign key constraints to maintain data integrity in the database.
+
+This is a basic outline, and the actual implementation details may vary based on specific requirements and technologies used.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

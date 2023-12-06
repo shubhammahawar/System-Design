@@ -122,7 +122,8 @@ Here are the main classes of our Parking Lot System:
 ![parkingLot-classDiagram](https://github.com/shubhammahawar/System-Design/assets/22192051/3de4b95e-702b-4bce-ab3d-c95694d9a12e)
 
 
-![parkingLot-umlConvention](https://github.com/shubhammahawar/System-Design/assets/22192051/6702e822-ddc0-4132-807c-1794e8de3bdf)
+![parkingLot-umlConvention](https://github.com/shubhammahawar/System-Design/assets/22192051/3681589d-4831-48da-b64d-cbc22322199c)
+
 
 
 

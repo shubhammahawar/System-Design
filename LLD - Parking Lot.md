@@ -67,8 +67,11 @@ A parking lot is an area where cars can be parked for a certain amount of time. 
 Here are the main Actors in our system:
 
 **Admin**: Mainly responsible for adding and modifying parking floors, parking spots, entrance, and exit panels, adding/removing parking attendants, etc.
+
 **Customer**: All customers can get a parking ticket and pay for it.
+
 **Parking Attendant**: Parking attendants can do all the activities on the customer’s behalf, and can take cash for ticket payment.
+
 **System**: To display messages on different info panels, as well as assigning and removing a vehicle from a parking spot.
 
 **Here are the top use cases for Parking Lot:**

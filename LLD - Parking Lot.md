@@ -30,18 +30,22 @@ A parking lot is an area where cars can be parked for a certain amount of time. 
 18. Details about the Parking Slots:
     Each type of slot can park a specific type of vehicle.
     No other vehicle should be allowed by the system.
+
     Finding the first available slot should be based on:
+
         The slot should be of the same type as the vehicle.
         The slot should be on the lowest possible floor in the parking lot.
         The slot should have the lowest possible slot number on the floor.
         Numbered serially from 1 to n for each floor where n is the number of parking slots on that floor.
 
 19. Details about the Parking Lot Floors:
+
     Numbered serially from 1 to n where n is the number of floors.
     Might contain one or more parking lot slots of different types.
     We will assume that the first slot on each floor will be for a truck, the next 2 for bikes, and all the other slots for cars.
 
 20. Details about the Tickets:
+
     The ticket id would be of the following format:
      <parking_lot_id>_<floor_no>_<slot_no>
     Example: PR1234_2_5 (denotes 5th slot of 2nd floor of parking lot PR1234)

@@ -40,11 +40,14 @@ A parking lot is an area where cars can be parked for a certain amount of time. 
 
 19. Details about the Parking Lot Floors:
 
+
     Numbered serially from 1 to n where n is the number of floors.
     Might contain one or more parking lot slots of different types.
     We will assume that the first slot on each floor will be for a truck, the next 2 for bikes, and all the other slots for cars.
 
+
 20. Details about the Tickets:
+
 
     The ticket id would be of the following format:
      <parking_lot_id>_<floor_no>_<slot_no>

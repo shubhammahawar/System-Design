@@ -137,6 +137,13 @@ Customer paying for parking ticket: Any customer can perform this activity. Here
 
 **Database Schema Design**
 
+**1st choice :**
+
+![Screenshot (723)](https://github.com/shubhammahawar/System-Design/assets/22192051/5e94d9e8-a281-4023-a521-05729cbffecf)
+
+
+**2nd choice**
+
 ![parkingLotSchemaDesign](https://github.com/shubhammahawar/System-Design/assets/22192051/3d8106b8-5f58-416d-b96b-93b27a1a8b5a)
 
 

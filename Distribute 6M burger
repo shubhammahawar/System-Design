@@ -1,0 +1,39 @@
+
+
+Functional Requirements :
+a. only for users with account
+   Each user = 1 account = 1 free burger
+b. 30M active user on app, however 20M will take part in this campaign or try and claim free burger.
+c. Any user above 6M will get "SORRY" message.
+d. All user information  already existing in user table/service
+e. Banner/Button popup on screen.
+f. Assignment/Distribution of burger - FIFO
+g. Geographically Confined : If  its a global level - then issue of trcking tracking data at multiple data centre along with multiple languages.
+
+Non-Functional Requirements :
+Infrastructure already exists in terms of distributed counter - lets discuss it more.
+supports for clients - mobile and web.
+High Availability
+Low Latency
+System should be scalable and efficient
+Slightly under acceptable [ For those who do not accept ? assign exactly 6M]
+
+
+Estimation :
+
+Traffic:
+20M request per 10 minute -> i.e 20*10^6 /(60*10) -> 35K rps
+
+Bandwidth:
+35K request coming each second and each request is of size 1Kb (1000 bytes) i.e
+35000*1000bytes = 3.5MB/second
+
+
+Storage:
+
+
+
+
+
+
+

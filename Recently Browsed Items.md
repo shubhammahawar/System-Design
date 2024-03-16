@@ -109,10 +109,15 @@ Product Service API:**
 **Component :**
 
 Cloud Infrastructure: This represents the underlying cloud services such as AWS or OpenConnect that host the microservices and provide scalability and reliability.
+
 Load Balancer: Distributes incoming traffic across multiple instances of the User Service and Product Service for load balancing and fault tolerance.
+
 User Service: Handles user-related functionalities including tracking browsing history. It communicates with the RedisIn Cache to retrieve user last products data.
+
 Product Service: Manages products and implements caching for efficient retrieval of browsing history. It communicates with both the MongoDB database and the Redis cache.
+
 MongoDB Database: Stores user information and browsing history data. It is accessed by both the User Service and the Product Service.
+
 Redis Cache: In-memory cache used by the Product Service to store the last 5 browsed products for each user. It helps reduce latency and improve performance by caching frequently accessed data.
 
 

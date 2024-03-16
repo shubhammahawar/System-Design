@@ -132,12 +132,18 @@ Redis Cache: In-memory cache used by the Product Service to store the last 5 bro
 "userId": 123,
 "itemId": 456
 }
+
 4. The writer side of the recently viewed items page service will listen to events
+
 5. The event will be written to PostgreSQL for long term storage. This data can later be used for product recommendations and other Machine Learning activities.
+
 6. Writer will write the event to Redis. Here we will make use of Redis sorted sets to keep latest 100 events produced in last 6 months. 
    We will have one sorted set per user.
+
 7. User makes a request through UserService to view the recently viewed items. The reque
+
 8. The request will go to any of the reader based on their current CPU utilisation
+
 9. The reader will make a call to the Redis sorted set and return the response
 
 

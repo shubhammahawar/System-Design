@@ -14,41 +14,41 @@ Components:
 
 
 
-Functional Requirements:
+**Functional Requirements:**
 
-User Service Functionality:
+**User Service Functionality:**
   Track user browsing history.
   Store browsing history in the database along with timestamps.
 
-Product Service Functionality:
+**Product Service Functionality:**
   Provide endpoints to fetch the last 5 browsed products for a user.
   Implement caching mechanism to store and retrieve user's browsing history efficiently.
 
-Client-side Component Functionality:
+**Client-side Component Functionality:**
   Fetch last 5 browsed products for the current user.
   Display the retrieved products in the user interface.
 
-Non-functional Requirements:
+**Non-functional Requirements:**
 
-Performance:
+**Performance:**
   Ensure low latency in retrieving the last 5 browsed products.
   Implement efficient caching to minimize database queries.
 
-Scalability:
+**Scalability:**
   Design the system to handle increased traffic without compromising performance.
   Utilize cloud infrastructure for horizontal scaling.
 
-Reliability:
+**Reliability:**
   Ensure high availability of the system.
   Implement fault-tolerant mechanisms to handle failures gracefully.
 
-Security:
+**Security:**
   Authenticate users before accessing their browsing history.
   Encrypt sensitive data such as browsing history to protect user privacy.
 
-Estimation :
+**Estimation :**
 
-Traffic :
+**Traffic :**
 Suppose 200 million users are registered on the app and only 10 % are active on a given day. This will gave us the 20 million users/ day.
 
 
@@ -58,7 +58,7 @@ As we assume its 100:1 read write ratio
 For Reads per day = 100 * 20 million = 2 billion/day
 For Write per day =  1*20 million = 20 million/day
 
-Request per second =
+**Request per second =**
 
 For write request
 20 *1000000 /(24*3600) =  230 request per second
@@ -66,12 +66,12 @@ For write request
 For read request
 2 billion / (24*3600) = 2.3 MB/sec
 
-Bandwidth :
+**Bandwidth :**
 We expect around 230 request generating every second and each request is of size 500 bytes then total incoming data =
 230 * 500 bytes = 115KB/second
 
 
-Storage :
+**Storage :**
 For storage, we will assume we store each record in our database for 10 years. 
 Since we expect around 20M new requests every day, the total number of records we will need to store would be:
 
@@ -80,7 +80,7 @@ Since we expect around 20M new requests every day, the total number of records w
 Also each record is of size 500 bytes = 57 billion * 500 bytes = 28 TB
 
 
-Caching :
+**Caching :**
 
 Cache Implementation:
    Use an in-memory cache such as Redis to store the last 5 browsed products for each user.
@@ -90,23 +90,23 @@ Cache Invalidation:
    Implement a time-based or event-based invalidation mechanism.
 
 
-API Design:
+**API Design:**
 
-User Service API:
+**User Service API:**
    Endpoint: /track-browsing
    Method: POST
    Parameters: User ID, Product ID
    Description: Tracks user browsing history and stores the product ID along with the timestamp.
 
-
-Product Service API:
+**
+Product Service API:**
    Endpoint: /last-browsed-products/:userId
    Method: GET
    Parameters: User ID
    Description: Retrieves the last 5 browsed products for the specified user.
 
 
-Component :
+**Component :**
 
 Cloud Infrastructure: This represents the underlying cloud services such as AWS or OpenConnect that host the microservices and provide scalability and reliability.
 Load Balancer: Distributes incoming traffic across multiple instances of the User Service and Product Service for load balancing and fault tolerance.
@@ -116,7 +116,7 @@ MongoDB Database: Stores user information and browsing history data. It is acces
 Redis Cache: In-memory cache used by the Product Service to store the last 5 browsed products for each user. It helps reduce latency and improve performance by caching frequently accessed data.
 
 
-Let’s go over how the system will work
+**Let’s go over how the system will work**
 
 1. User will use their favourite browser to view the products page
 2. Product details will be fetched from the product service

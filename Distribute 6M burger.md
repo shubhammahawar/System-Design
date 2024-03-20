@@ -68,18 +68,26 @@ Possible issues and tackle :
 
 Points :
 Burger Give away service is a cluster of service
+
 Distributed counters are like in memory counter like redis or something 
+
 If these counters are stored in each instance the problem is if instance goes down we will loose the count.
+
 If we have a incremental counter then we will need a cordination between distributed counter, aggregator & total count.
-Instead we will be having a 6 decremented counter with initially 1M each - and once the counter is finisded we will go for 
-another counter and check if it has some capacity
+
+Instead we will be having a 6 decremented counter with initially 1M each - and once the counter is finisded we will go for another counter and check if it has some capacity
+
 We actually might not need Cache here, because we don't know if there is any specific user will try to raise request again or not. 
+
 We can easily store 6M record in main DB
+
 We will be having a round robin Load Balancer between Burger service and API Service 
 
 Monitoring Service :
 It will check the throughput to the database to the main database and check if the database is goes down what we have to do next
+
 Check Response time
+
 Check Memory Utilization
 
 

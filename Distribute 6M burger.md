@@ -1,4 +1,5 @@
 
+**Build a system to distribute 6 million free burgers in ~10 minutes.**
 
 Functional Requirements :
 a. only for users with account
@@ -10,7 +11,7 @@ e. Banner/Button popup on screen.
 f. Assignment/Distribution of burger - FIFO
 g. Geographically Confined : If  its a global level - then issue of trcking tracking data at multiple data centre along with multiple languages.
 
-Non-Functional Requirements :
+Non-Functional Requirements [=
 Infrastructure already exists in terms of distributed counter - lets discuss it more.
 supports for clients - mobile and web.
 High Availability
@@ -100,6 +101,34 @@ What will be the rateLimiting in terms of API Gateway?
 So this API Gateway sits in front of multiple service not just Burger give away service. We can have a rate limit to 1 for a specific end point configuration,
 In our case its a burger give away service - if a particular user is requesting more than once free burger. But it also might not need because we are handling it 
 at database level based on userId and status check.
+
+
+**WORKFLOW**
+
+1. Clients initiate a request to claim a free burger by sending an HTTP request to the API Gateway.
+2. The API Gateway receives the request and sends its to Lod Balancer which routes it to the appropriate 
+   endpoint within the system.
+3. The App Server receives the request and route the particular request to the Burger Giveaway Service .
+4. The Burger Giveaway Service queries the decremented distributed counter (e.g., ZooKeeper) to check the availability of free burgers.
+5. If free burgers are available, the request is placed onto a messaging queue for asynchronous processing.
+   AppServers (servers) consume messages from the queue.
+6. App Server will process the request, It interacts with the database to verify user eligibility and update user records as necessary.
+7. Now the App Server updates the database to reflect the claimed free burger and any associated changes to user records.
+8. Response - The result of the request processing is sent back through the system, ultimately reaching the client through the API Gateway.
+
+
+
+
+**Architecture Diagram**
+
+
+![Distribute_Burger](https://github.com/shubhammahawar/System-Design/assets/22192051/07df8372-9369-44a7-ba64-60b16c65cb30)
+
+
+
+
+
+
 
 
 

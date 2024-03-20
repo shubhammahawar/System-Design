@@ -18,7 +18,7 @@ f. Assignment/Distribution of burger - FIFO.
 
 g. Geographically Confined : If  its a global level - then issue of trcking tracking data at multiple data centre along with multiple languages.
 
-**Non-Functional Requirements **
+**Non-Functional Requirements**
 
 a. Infrastructure already exists in terms of distributed counter - lets discuss it more.
 
@@ -109,19 +109,21 @@ c. Check Memory Utilization
 **Question ?**
 
 How will you determine from Burger service to counter,which specific counter request will go?
+
 We will use something like Zookeeper to distribute it to specific counter
 
 Can we like use ahsing on userID and then distribute the request based on hashvalue to a counter?
+
 The issue here if request goes to a counter which has a zero capacity and others counter still have capacity left so that will again v=create to and fro of request
 
 How the request will going to server 200/OK ?
-In the user Table we will search if the userId is still exist with status clamied/pending we will return a fail request.
-If it doesn't exist we will check the capacity count of a counter and if its available we will write it and decrement the counter and write succedded in database 
-and return a success response.
+
+In the user Table we will search if the userId is still exist with status clamied/pending we will return a fail request.If it doesn't exist we will check the capacity count of a counter and if its available we will write it and decrement the counter and write succedded in database and return a success response.
 
 So Total 2 checks in the database and one for the counter
 
 What will be the rateLimiting in terms of API Gateway?
+
 So this API Gateway sits in front of multiple service not just Burger give away service. We can have a rate limit to 1 for a specific end point configuration.In our case its a burger give away service - if a particular user is requesting more than once free burger. But it also might not need because we are handling it at database level based on userId and status check.
 
 

@@ -54,6 +54,19 @@ No Requirement
 
 **API design :**
 
+API Design:
+Order API:
+
+placeOrder(userID, burgerType, quantity)
+getOrderStatus(orderID)
+Inventory API:
+
+getInventoryStatus()
+updateInventory(burgerType, quantity)
+Distribution API:
+
+distributeBurger(orderID, deliveryAddress)
+
 
 
 **Discussion :**

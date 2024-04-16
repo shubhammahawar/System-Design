@@ -108,13 +108,17 @@ c. If these counters are stored in each instance the problem is if instance goes
 
 d. If we have a incremental counter then we will need a cordination between distributed counter, aggregator & total count.
 
-e. Instead we will be having a 6 decremented counter with initially 1M each - and once the counter is finisded we will go for another counter and check if it has some capacity
+e. Instead we will be having a 6 decremented counter with initially 1M each - and once the counter is finisded we will go for another counter and check if it has some capacity.
 
-f. We actually might not need Cache here, because we don't know if there is any specific user will try to raise request again or not. 
+f. we can use a distributed system manager such as Zookeeper which can provide distributed synchronization. Zookeeper can maintain multiple ranges for our servers.
 
-g. We can easily store 6M record in main DB
+Once a server reaches its maximum range Zookeeper will assign an unused counter range to the new server. This approach can guarantee non-duplicate and collision-resistant URLs. Also, we can run multiple instances of Zookeeper to remove the single point of failure.
 
-h. We will be having a round robin Load Balancer between Burger service and API Service 
+g. We actually might not need Cache here, because we don't know if there is any specific user will try to raise request again or not. 
+
+h. We can easily store 6M record in main DB
+
+i. We will be having a round robin Load Balancer between Burger service and API Service 
 
 **Monitoring Service :**
 

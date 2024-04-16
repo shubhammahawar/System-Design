@@ -50,6 +50,7 @@ Traffic:
 
 **Cache :**
 No Requirement
+We actually might not need Cache here, because we don't know if there is any specific user will try to raise request again or not.
 
 
 **API design :**
